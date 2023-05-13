@@ -36,11 +36,16 @@ $routes->get('/login', 'UserController::login', ['filter' => 'guest']);
 $routes->post('/login', 'UserController::authenticate', ['filter' => 'guest']);
 $routes->get('/register', 'UserController::register', ['filter' => 'guest']);
 $routes->post('/register/store', 'UserController::store', ['filter' => 'guest']);
+$routes->post('/logout', 'UserController::logout', ['filter' => 'auth']);
 
 
 // Dashboard
 $routes->get('/dashboard', 'UserController::index', ['filter' => 'auth']);
-$routes->post('/logout', 'UserController::logout', ['filter' => 'auth']);
+
+// Manajemen Barang
+$routes->get('/products', 'ProductController::index', ['filter' => 'auth']);
+$routes->get('/products/add', 'ProductController::add', ['filter' => 'auth']);
+
 
 
 /*

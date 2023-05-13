@@ -21,8 +21,8 @@ class UserController extends BaseController
     {
         //
         $this->data = [
-            "page-title" => "Dashboard",
-            "menu" => "overview"
+            "page_title" => "overview",
+            "menu" => "dashboard"
         ];
         return view('dashboard/index', $this->data);
     }
@@ -41,10 +41,6 @@ class UserController extends BaseController
 
     public function register()
     {
-        // helper('form');
-        // $this->data['validation'] = \Config\Services::validation();
-        // d($this->session);
-        // d($this->data['validation']);
         return view('login-register/register', $this->data);
     }
 
@@ -69,10 +65,11 @@ class UserController extends BaseController
                 ]
             ],
             "email" => [
-                "rules" => "required|valid_email",
+                "rules" => "required|valid_email|max_length[50]",
                 "errors" => [
                     "required" => "Harap isi {field} terlebih dahulu",
                     "valid_email" => "format {field} salah",
+                    "max_length" => "{field} maksimal karakter 50",
                 ]
             ],
             "password" => [
@@ -90,13 +87,15 @@ class UserController extends BaseController
 
         // Insert ke db
         $this->model->insert($filterData);
-        $this->authenticate();
+
         // return redirect()->to(base_url('/login'))->with('daftar_berhasil', 'Pendaftaran Akun Berhasil');
+        return $this->authenticate();;
     }
 
     public function authenticate()
     {
         $dataInput = $this->request->getVar();
+        // dd($dataInput);
         $filterData = [
             "username" => esc($dataInput['username']),
             "password" => esc($dataInput['password']),

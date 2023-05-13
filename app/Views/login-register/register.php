@@ -2,7 +2,13 @@
 
 <?= $this->section('content'); ?>
 <div class="vw-100 vh-100 d-flex align-items-center justify-content-center" style="background-image: url('img/register.jpg'); background-repeat: no-repeat; background-size: cover;">
-  <div class="col-8 col-lg-4">
+  <div class="col-8 col-lg-4 p-3" style="
+background: rgba(255, 255, 255, 0.2);
+border-radius: 16px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(5px);
+-webkit-backdrop-filter: blur(5px);
+border: 1px solid rgba(255, 255, 255, 0.3);">
     <main class="form-signin w-100 mb-3">
       <div class="w-100 d-flex flex-column justify-content-between align-items-center mb-4" style="height: 100px;">
         <img src="img/google.png" alt="" width="50" height="50" class="-top-3">

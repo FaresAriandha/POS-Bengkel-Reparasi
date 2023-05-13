@@ -12,18 +12,18 @@
     <!-- Mahasiswa -->
     <ul class="nav flex-column">
       <h6 class="sidebar-heading text-muted d-flex flex-col justify-content-between align-items-center px-3 mt-4 fs-6 fw-bold">
-        Mahasiswa
+        Manajemen Barang
       </h6>
       <li class="nav-item">
-        <a class="nav-link <?= $menu == 'students' ? 'active' : ''; ?>" href="<?= base_url('/students/index'); ?>">
+        <a class="nav-link <?= $menu == 'products' ? 'active' : ''; ?>" href="<?= base_url('/products'); ?>">
           <span data-feather="file-text" class="align-text-bottom"></span>
-          Daftar Mahasiswa
+          Daftar Barang
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link <?= $menu == "jenjang" ? 'active' : ''; ?>" href="<?= base_url('/jenjang'); ?>">
+        <a class="nav-link <?= $menu == "add_product" ? 'active' : ''; ?>" href="<?= base_url('/products/add'); ?>">
           <span data-feather="file-text" class="align-text-bottom"></span>
-          Jenjang Pendidikan
+          Tambah Barang
         </a>
       </li>
     </ul>
@@ -32,7 +32,46 @@
     <!-- Contacts -->
     <ul class="nav flex-column">
       <h6 class="sidebar-heading text-muted d-flex flex-col justify-content-between align-items-center px-3 mt-4 fs-6 fw-bold">
-        Kontak Saya
+        Manajemen Karyawan
+      </h6>
+      <li class="nav-item">
+        <a class="nav-link <?= $menu == "contacts" ? 'active' : ''; ?>" href="<?= base_url('/contacts'); ?>">
+          <span data-feather="file-text" class="align-text-bottom"></span>
+          Daftar Kontak
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link <?= $menu == "add_contact" ? 'active' : ''; ?>" href="<?= base_url('/contacts/create'); ?>">
+          <span data-feather="file-text" class="align-text-bottom"></span>
+          Tambah Kontak
+        </a>
+      </li>
+    </ul>
+
+    <!-- Contacts -->
+
+    <ul class="nav flex-column">
+      <h6 class="sidebar-heading text-muted d-flex flex-col justify-content-between align-items-center px-3 mt-4 fs-6 fw-bold">
+        Manajemen Pemesanan
+      </h6>
+      <li class="nav-item">
+        <a class="nav-link <?= $menu == "contacts" ? 'active' : ''; ?>" href="<?= base_url('/contacts'); ?>">
+          <span data-feather="file-text" class="align-text-bottom"></span>
+          Daftar Kontak
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link <?= $menu == "add_contact" ? 'active' : ''; ?>" href="<?= base_url('/contacts/create'); ?>">
+          <span data-feather="file-text" class="align-text-bottom"></span>
+          Tambah Kontak
+        </a>
+      </li>
+    </ul>
+
+    <!-- Contacts -->
+    <ul class="nav flex-column">
+      <h6 class="sidebar-heading text-muted d-flex flex-col justify-content-between align-items-center px-3 mt-4 fs-6 fw-bold">
+        Manajemen Transaksi
       </h6>
       <li class="nav-item">
         <a class="nav-link <?= $menu == "contacts" ? 'active' : ''; ?>" href="<?= base_url('/contacts'); ?>">
