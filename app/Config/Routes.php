@@ -45,6 +45,10 @@ $routes->get('/dashboard', 'UserController::index', ['filter' => 'auth']);
 // Manajemen Barang
 $routes->get('/products', 'ProductController::index', ['filter' => 'auth']);
 $routes->get('/products/add', 'ProductController::add', ['filter' => 'auth']);
+$routes->get('/products/edit/(:num)', 'ProductController::edit/$1', ['filter' => 'auth']);
+$routes->post('/products/store', 'ProductController::store', ['filter' => 'auth']);
+$routes->post('/products/update', 'ProductController::update', ['filter' => 'auth']);
+$routes->post('/products/delete/(:num)', 'ProductController::destroy/$1', ['filter' => 'auth']);
 
 
 

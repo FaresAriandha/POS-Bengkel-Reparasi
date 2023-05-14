@@ -4,16 +4,16 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class ProductModel extends Model
+class CategoryModel extends Model
 {
     protected $DBGroup          = 'default';
-    protected $table            = 'master_barang';
+    protected $table            = 'jenis_barang';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['nama_barang', 'foto_barang', 'jenis_barang', 'kuantitas', 'harga_per_satuan'];
+    protected $allowedFields    = ['kategori'];
 
     // Dates
     protected $useTimestamps = false;

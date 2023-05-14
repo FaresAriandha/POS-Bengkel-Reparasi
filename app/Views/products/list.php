@@ -9,6 +9,7 @@
       <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
       <button class="btn btn-outline-success" type="submit">Search</button>
     </form>
+
   </div>
   <div class="table-responsive">
     <table class="table table-bordered align-middle">
@@ -24,19 +25,32 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <th scope="row" class="text-center">1</th>
-          <td>Alfares Ariandha Nurdin</td>
-          <td class="text-center">Kategori</td>
-          <td class="text-center">aksjaksjaksjak</td>
-          <td class="text-center">3</td>
-          <td class="text-center">Rp. <?= number_format(110000); ?></td>
-          <td class="w-full d-flex justify-content-center gap-3">
-            <a href="" class="btn btn-danger"><i class="bi bi-trash"></i></a>
-            <button class="btn btn-warning text-white" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-info-circle"></i></button>
-            <a href="" class="btn btn-success"><i class="bi bi-pencil-square"></i></a>
-          </td>
-        </tr>
+        <?php $no = 0; ?>
+        <?php if (count($products) > 0) : ?>
+          <?php foreach ($products as $product) : ?>
+            <tr>
+              <th scope="row" class="text-center"><?= ++$no; ?></th>
+              <td><?= $product['nama_barang']; ?></td>
+              <td class="text-center"><img src="img/uploads/<?= $product['foto_barang']; ?>" alt="" width="100"></td>
+              <td class="text-center"><?= $product['jenis_barang']; ?></td>
+              <td class="text-center"><?= $product['kuantitas']; ?></td>
+              <td class="text-center">Rp. <?= number_format($product['harga_per_satuan']); ?></td>
+              <td class="w-full d-flex justify-content-center gap-3">
+                <form action="/products/delete/<?= $product['id']; ?>" method="post" id="deleteForm">
+                  <button type="button" class="btn btn-danger btn-delete"><i class="bi bi-trash"></i></button>
+                </form>
+                <!-- <button class="btn btn-warning text-white" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-info-circle"></i></button> -->
+                <a href="/products/edit/<?= $product['id']; ?>" class="btn btn-success"><i class="bi bi-pencil-square"></i></a>
+              </td>
+            </tr>
+          <?php endforeach; ?>
+        <?php else : ?>
+          <tr>
+            <td colspan="7">
+              <h3>Maaf, produk belum tersedia</h3>
+            </td>
+          </tr>
+        <?php endif; ?>
       </tbody>
     </table>
   </div>
@@ -61,4 +75,47 @@
   </div>
 </div>
 
+<script>
+  $(function() {
+    <?php if (session()->has("add")) : ?>
+      Swal.fire({
+        icon: 'success',
+        title: 'Sukses!',
+        text: '<?= session("add") ?>'
+      })
+    <?php endif; ?>
+
+    <?php if (session()->has("delete")) : ?>
+      Swal.fire({
+        icon: 'success',
+        title: 'Sukses!',
+        text: '<?= session("delete") ?>'
+      })
+    <?php endif; ?>
+
+    <?php if (session()->has("update")) : ?>
+      Swal.fire({
+        icon: 'success',
+        title: 'Sukses!',
+        text: '<?= session("update") ?>'
+      })
+    <?php endif; ?>
+
+    $('.btn-delete').on('click', () => {
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          $('#deleteForm').submit();
+        }
+      })
+    })
+  });
+</script>
 <?= $this->endSection(); ?>

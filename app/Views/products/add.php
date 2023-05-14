@@ -4,39 +4,67 @@
 <div class="row ms-2">
   <h1 class="my-3">Form Tambah Produk</h1>
   <div class="col-lg-8 border border-2 rounded-3 p-3 shadow">
+    <?php $error = session()->get('_ci_validation_errors'); ?>
     <form action="/products/store" method="post" enctype="multipart/form-data">
       <div class="mb-3">
         <label for="nama_barang" class="form-label">Nama Barang</label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="2" placeholder="FDR Ring 14, 2023" name="nama_barang"></textarea>
+        <textarea class="form-control <?= isset($error['nama_barang']) ? 'is-invalid' : ''; ?>" id="exampleFormControlTextarea1" rows="2" placeholder="FDR Ring 14, 2023" name="nama_barang"><?= old('nama_barang'); ?></textarea>
+        <div class="invalid-feedback">
+          <?= isset($error['nama_barang']) ? $error['nama_barang'] : ''; ?>
+        </div>
       </div>
       <div class="mb-3">
         <label for="jenis_barang" class="form-label">Jenis Barang</label>
-        <select class="form-select" name="jenis_barang">
-          <option selected disabled>-- Pilih salah satu --</option>
-          <option value="1">Test</option>
+        <select class="form-select  <?= isset($error['jenis_barang']) ? 'is-invalid' : ''; ?>" name="jenis_barang">
+          <option selected value="">-- Pilih salah satu --</option>
+          <?php foreach ($categories as $category) : ?>
+            <option value="<?= $category['id']; ?>"><?= $category['kategori']; ?></option>
+          <?php endforeach; ?>
         </select>
+        <div class="invalid-feedback">
+          <?= isset($error['jenis_barang']) ? $error['jenis_barang'] : ''; ?>
+        </div>
       </div>
       <div class="mb-3 col-2">
         <label for="kuantitas" class="form-label">Kuantitas</label>
         <div class="input-group">
-          <input type="number" class="form-control" id="kuantitas" name="kuantitas" placeholder="0">
+          <input type="number" class="form-control  <?= isset($error['kuantitas']) ? 'is-invalid' : ''; ?>" id="kuantitas" name="kuantitas" placeholder="0" value="<?= old('kuantitas'); ?>">
           <span class="input-group-text" id="basic-addon1">Qty</span>
+          <div class="invalid-feedback">
+            <?= isset($error['kuantitas']) ? $error['kuantitas'] : ''; ?>
+          </div>
         </div>
       </div>
       <div class="mb-3">
         <label for="harga_per_satuan" class="form-label">Harga Per Satuan</label>
         <div class="input-group mb-3">
           <span class="input-group-text" id="basic-addon1">Rp.</span>
-          <input type="number" class="form-control" id="harga_per_satuan" name="harga_per_satuan" placeholder="0">
+          <input type="number" class="form-control  <?= isset($error['harga_per_satuan']) ? 'is-invalid' : ''; ?>" id="harga_per_satuan" name="harga_per_satuan" placeholder="0" value="<?= old('harga_per_satuan'); ?>">
+          <div class="invalid-feedback">
+            <?= isset($error['harga_per_satuan']) ? $error['harga_per_satuan'] : ''; ?>
+          </div>
         </div>
       </div>
       <div class="mb-3">
         <label for="foto_barang" class="form-label">Foto Barang</label>
-        <img src="/img/google.png" alt="" class="img-preview d-block my-3" width="100">
-        <input type="file" class="form-control" name="foto_barang" id="foto_barang">
+        <img src="<?= old('foto_barang'); ?>" alt="" class="img-preview d-block my-3 d-none" width="100">
+        <input type="file" class="form-control  <?= isset($error['foto_barang']) ? 'is-invalid' : ''; ?>" name="foto_barang" id="foto_barang">
+        <div class="invalid-feedback">
+          <?= isset($error['foto_barang']) ? $error['foto_barang'] : ''; ?>
+        </div>
       </div>
       <button type="submit" class="btn btn-primary">Tambah</button>
     </form>
   </div>
 </div>
+
+<script>
+  // Image Preview
+  const img_preview = document.querySelector(".img-preview");
+  const input_img = document.getElementById("foto_barang");
+  input_img.addEventListener("change", function(e) {
+    img_preview.src = URL.createObjectURL(this.files[0]);
+    img_preview.classList.remove("d-none");
+  });
+</script>
 <?= $this->endSection(); ?>
