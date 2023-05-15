@@ -43,20 +43,26 @@ $routes->post('/logout', 'UserController::logout', ['filter' => 'auth']);
 $routes->get('/dashboard', 'UserController::index', ['filter' => 'auth']);
 
 // Manajemen Barang
-$routes->get('/products', 'ProductController::index', ['filter' => 'auth']);
-$routes->get('/products/add', 'ProductController::add', ['filter' => 'auth']);
-$routes->get('/products/edit/(:num)', 'ProductController::edit/$1', ['filter' => 'auth']);
-$routes->post('/products/store', 'ProductController::store', ['filter' => 'auth']);
-$routes->post('/products/update', 'ProductController::update', ['filter' => 'auth']);
-$routes->post('/products/delete/(:num)', 'ProductController::destroy/$1', ['filter' => 'auth']);
+$routes->group('products', ['filter' => 'admin'], static function ($routes) {
+    $routes->get('/', 'ProductController::index');
+    $routes->get('add', 'ProductController::add');
+    $routes->get('edit/(:num)', 'ProductController::edit/$1');
+    $routes->post('store', 'ProductController::store');
+    $routes->post('update', 'ProductController::update');
+    $routes->post('delete/(:num)', 'ProductController::destroy/$1');
+});
 
 // Manajemen Karyawan
-$routes->get('/employees', 'EmployeeController::index', ['filter' => 'auth']);
-$routes->get('/employees/add', 'EmployeeController::add', ['filter' => 'auth']);
-$routes->get('/employees/edit/(:num)', 'EmployeeController::edit/$1', ['filter' => 'auth']);
-$routes->post('/employees/store', 'EmployeeController::store', ['filter' => 'auth']);
-$routes->post('/employees/update', 'EmployeeController::update', ['filter' => 'auth']);
-$routes->post('/employees/delete/(:num)', 'EmployeeController::destroy/$1', ['filter' => 'auth']);
+$routes->group('employees', ['filter' => 'admin'], static function ($routes) {
+    $routes->get('/', 'EmployeeController::index');
+    $routes->get('add', 'EmployeeController::add');
+    $routes->get('edit/(:num)', 'EmployeeController::edit/$1');
+    $routes->post('store', 'EmployeeController::store');
+    $routes->post('update', 'EmployeeController::update');
+    $routes->post('delete/(:num)', 'EmployeeController::destroy/$1');
+});
+
+
 
 
 

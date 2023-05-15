@@ -5,16 +5,20 @@ namespace App\Controllers;
 use App\Models\UserModel;
 // use \Config\Services;
 use App\Controllers\BaseController;
+use App\Models\EmployeeModel;
+use App\Models\ProductModel;
 use Config\Services;
 
 class UserController extends BaseController
 {
     protected $data;
-    protected $model, $session;
+    protected $model, $session, $employees, $products;
 
     public function __construct()
     {
         $this->model = new UserModel();
+        $this->employees = new EmployeeModel();
+        $this->products = new ProductModel();
         $this->data['session'] = \Config\Services::session();
     }
     public function index()
@@ -22,7 +26,10 @@ class UserController extends BaseController
         //
         $this->data = [
             "page_title" => "overview",
-            "menu" => "dashboard"
+            "menu" => "dashboard",
+            "user" => $this->employees->where('id_akun', session()->get('logged_in')['id'])->first(),
+            "count_employees" => count($this->employees->findAll()),
+            "count_products" => count($this->products->findAll()),
         ];
         return view('dashboard/index', $this->data);
     }

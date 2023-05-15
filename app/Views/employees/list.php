@@ -37,13 +37,13 @@
                 <form action="/employees/delete/<?= $employee['id']; ?>" method="post" id="deleteForm">
                   <button type="button" class="btn btn-danger btn-delete"><i class="bi bi-trash"></i></button>
                 </form>
-                <button class="btn btn-warning text-white" data-bs-toggle="modal" data-bs-target="#exampleModal" data-><i class="bi bi-info-circle"></i></button>
+                <button class="btn btn-warning text-white" data-bs-toggle="modal" data-bs-target="#exampleModal<?= $employee['id']; ?>" data-><i class="bi bi-info-circle"></i></button>
                 <a href="/employees/edit/<?= $employee['id']; ?>" class="btn btn-success"><i class="bi bi-pencil-square"></i></a>
               </td>
             </tr>
             <?php $no++ ?>
             <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade" id="exampleModal<?= $employee['id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
                 <div class="modal-content">
                   <div class="modal-header">

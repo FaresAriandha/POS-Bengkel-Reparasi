@@ -46,6 +46,7 @@ class EmployeeModel extends Model
             return $this->select('master_karyawan.id as id, nama_karyawan, foto_karyawan, jenis_kelamin, alamat, no_tlp, master_pengguna.email as email, master_pengguna.role as role, master_pengguna.username as username, master_pengguna.password as password')->join('master_pengguna', 'master_karyawan.id_akun=master_pengguna.id')
                 ->like('nama_karyawan', '%' . $keyword . '%')
                 ->orLike('jenis_kelamin', '%' . $keyword . '%')
+                ->orLike('role', '%' . $keyword . '%')
                 ->orderBy('id', 'desc')->paginate($this->numberOfPagination, "employees");
         }
 
