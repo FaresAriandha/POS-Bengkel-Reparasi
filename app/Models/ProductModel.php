@@ -38,4 +38,18 @@ class ProductModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+
+    protected $numberOfPagination = 5;
+    public function getAllProducts($keyword = null)
+    {
+        if ($keyword) {
+            return $this->select('master_barang.id as id, nama_barang, foto_barang, kuantitas, harga_per_satuan, jenis_barang.kategori as jenis_barang')->join('jenis_barang', 'master_barang.jenis_barang=jenis_barang.id')
+                ->like('nama_barang', '%' . $keyword . '%')
+                ->orLike('kategori', '%' . $keyword . '%')
+                ->orderBy('id', 'desc')->paginate($this->numberOfPagination, "products");
+        }
+
+        return $this->select('master_barang.id as id, nama_barang, foto_barang, kuantitas, harga_per_satuan, jenis_barang.kategori as jenis_barang')->join('jenis_barang', 'master_barang.jenis_barang=jenis_barang.id')->orderBy('id', 'desc')->paginate($this->numberOfPagination, "products");
+    }
 }

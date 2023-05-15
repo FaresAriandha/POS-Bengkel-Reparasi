@@ -9,7 +9,7 @@
       </li>
     </ul>
 
-    <!-- Mahasiswa -->
+    <!-- Barang -->
     <ul class="nav flex-column">
       <h6 class="sidebar-heading text-muted d-flex flex-col justify-content-between align-items-center px-3 mt-4 fs-6 fw-bold">
         Manajemen Barang
@@ -29,21 +29,21 @@
     </ul>
 
 
-    <!-- Contacts -->
+    <!-- Karyawan -->
     <ul class="nav flex-column">
       <h6 class="sidebar-heading text-muted d-flex flex-col justify-content-between align-items-center px-3 mt-4 fs-6 fw-bold">
         Manajemen Karyawan
       </h6>
       <li class="nav-item">
-        <a class="nav-link <?= $menu == "contacts" ? 'active' : ''; ?>" href="<?= base_url('/contacts'); ?>">
+        <a class="nav-link <?= $menu == "employees" ? 'active' : ''; ?>" href="<?= base_url('/employees'); ?>">
           <span data-feather="file-text" class="align-text-bottom"></span>
-          Daftar Kontak
+          Daftar Karyawan
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link <?= $menu == "add_contact" ? 'active' : ''; ?>" href="<?= base_url('/contacts/create'); ?>">
+        <a class="nav-link <?= $menu == "add_employee" ? 'active' : ''; ?>" href="<?= base_url('/employees/add'); ?>">
           <span data-feather="file-text" class="align-text-bottom"></span>
-          Tambah Kontak
+          Tambah Karyawan
         </a>
       </li>
     </ul>

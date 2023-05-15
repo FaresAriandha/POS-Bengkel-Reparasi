@@ -5,7 +5,7 @@
   <h1 class="my-3">Form Tambah Produk</h1>
   <div class="col-lg-8 border border-2 rounded-3 p-3 shadow">
     <?php $error = session()->get('_ci_validation_errors'); ?>
-    <form action="/products/store" method="post" enctype="multipart/form-data">
+    <form action="/products/store" method="post" enctype="multipart/form-data" class="d-flex flex-column">
       <div class="mb-3">
         <label for="nama_barang" class="form-label">Nama Barang</label>
         <textarea class="form-control <?= isset($error['nama_barang']) ? 'is-invalid' : ''; ?>" id="exampleFormControlTextarea1" rows="2" placeholder="FDR Ring 14, 2023" name="nama_barang"><?= old('nama_barang'); ?></textarea>
@@ -53,7 +53,10 @@
           <?= isset($error['foto_barang']) ? $error['foto_barang'] : ''; ?>
         </div>
       </div>
-      <button type="submit" class="btn btn-primary">Tambah</button>
+      <div class="button align-self-end">
+        <a href="/employees" class="btn btn-secondary">Kembali</a>
+        <button type="submit" class="btn btn-success">Tambah</button>
+      </div>
     </form>
   </div>
 </div>

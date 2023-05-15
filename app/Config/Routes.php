@@ -50,6 +50,14 @@ $routes->post('/products/store', 'ProductController::store', ['filter' => 'auth'
 $routes->post('/products/update', 'ProductController::update', ['filter' => 'auth']);
 $routes->post('/products/delete/(:num)', 'ProductController::destroy/$1', ['filter' => 'auth']);
 
+// Manajemen Karyawan
+$routes->get('/employees', 'EmployeeController::index', ['filter' => 'auth']);
+$routes->get('/employees/add', 'EmployeeController::add', ['filter' => 'auth']);
+$routes->get('/employees/edit/(:num)', 'EmployeeController::edit/$1', ['filter' => 'auth']);
+$routes->post('/employees/store', 'EmployeeController::store', ['filter' => 'auth']);
+$routes->post('/employees/update', 'EmployeeController::update', ['filter' => 'auth']);
+$routes->post('/employees/delete/(:num)', 'EmployeeController::destroy/$1', ['filter' => 'auth']);
+
 
 
 /*

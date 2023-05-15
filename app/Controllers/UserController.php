@@ -57,7 +57,7 @@ class UserController extends BaseController
 
         $rulesSet = [
             "username" => [
-                "rules" => "required|max_length[8]|is_unique[master_pengguna.username]",
+                "rules" => "required|max_length[20]|is_unique[master_pengguna.username]",
                 "errors" => [
                     "required" => "Harap isi {field} terlebih dahulu",
                     "max_length" => "{field} maksimal karakter 20",
@@ -89,7 +89,7 @@ class UserController extends BaseController
         $this->model->insert($filterData);
 
         // return redirect()->to(base_url('/login'))->with('daftar_berhasil', 'Pendaftaran Akun Berhasil');
-        return $this->authenticate();;
+        return $this->authenticate();
     }
 
     public function authenticate()

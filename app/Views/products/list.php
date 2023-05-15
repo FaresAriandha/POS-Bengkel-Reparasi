@@ -1,12 +1,12 @@
 <?= $this->extend('dashboard/templates/main'); ?>
 
 <?= $this->section('content'); ?>
-<div class="row mt-5">
-  <h1>Daftar Barang</h1>
+<div class="row my-5">
+  <h1>Daftar Produk</h1>
   <div class="add-search d-flex w-full justify-content-between mt-3 mb-3">
-    <a href="/products/add" class="btn btn-primary">Tambah Produk</a>
-    <form class="d-flex" role="search">
-      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+    <a href="/products/add" class="btn btn-primary h-fit">Tambah Produk</a>
+    <form class="d-flex" role="search" action="/products" method="GET">
+      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="keyword" value="<?= isset($_GET['keyword']) ? $_GET['keyword'] : ''; ?>">
       <button class="btn btn-outline-success" type="submit">Search</button>
     </form>
 
@@ -19,19 +19,19 @@
           <th scope="col">Nama Produk</th>
           <th scope="col">Foto Produk</th>
           <th scope="col">Kategori Produk</th>
-          <th scope="col">Jumlah Tersedia</th>
+          <th scope="col">Jumlah Tersedia (pcs)</th>
           <th scope="col">Harga per satuan</th>
           <th scope="col">Aksi</th>
         </tr>
       </thead>
       <tbody>
-        <?php $no = 0; ?>
+        <?php $no = 1; ?>
         <?php if (count($products) > 0) : ?>
           <?php foreach ($products as $product) : ?>
             <tr>
-              <th scope="row" class="text-center"><?= ++$no; ?></th>
+              <th scope="row" class="text-center"><?= isset($_GET['page_products']) ? $no + ($_GET['page_products'] - 1) * $pagination : $no; ?></th>
               <td><?= $product['nama_barang']; ?></td>
-              <td class="text-center"><img src="img/uploads/<?= $product['foto_barang']; ?>" alt="" width="100"></td>
+              <td class="text-center"><img src="<?= base_url('img/uploads/products/' . $product['foto_barang']); ?>" alt="" width="150" height="100"></td>
               <td class="text-center"><?= $product['jenis_barang']; ?></td>
               <td class="text-center"><?= $product['kuantitas']; ?></td>
               <td class="text-center">Rp. <?= number_format($product['harga_per_satuan']); ?></td>
@@ -43,6 +43,7 @@
                 <a href="/products/edit/<?= $product['id']; ?>" class="btn btn-success"><i class="bi bi-pencil-square"></i></a>
               </td>
             </tr>
+            <?php $no++ ?>
           <?php endforeach; ?>
         <?php else : ?>
           <tr>
@@ -54,6 +55,7 @@
       </tbody>
     </table>
   </div>
+  <?= $pager->links("products", "pagination"); ?>
 </div>
 
 <!-- Modal -->
@@ -74,6 +76,7 @@
     </div>
   </div>
 </div>
+
 
 <script>
   $(function() {
@@ -103,13 +106,14 @@
 
     $('.btn-delete').on('click', () => {
       Swal.fire({
-        title: 'Are you sure?',
+        title: 'Apakah kamu yakin menghapusnya?',
         text: "You won't be able to revert this!",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
+        cancelButtonText: 'Batalkan',
+        confirmButtonText: 'Ya, hapus data!'
       }).then((result) => {
         if (result.isConfirmed) {
           $('#deleteForm').submit();

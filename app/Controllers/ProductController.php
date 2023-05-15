@@ -17,13 +17,20 @@ class ProductController extends BaseController
         $this->model = new ProductModel();
         $this->jenis = new CategoryModel();
         $this->data['session'] = \Config\Services::session();
+        $this->data['pagination'] = $this->model->numberOfPagination;
     }
 
     public function index()
     {
         $this->data['page_title'] = "List Products";
         $this->data['menu'] = "products";
-        $this->data['products'] = $this->model->select('master_barang.id as id, nama_barang, foto_barang, kuantitas, harga_per_satuan, jenis_barang.kategori as jenis_barang')->join('jenis_barang', 'master_barang.jenis_barang=jenis_barang.id')->orderBy('id', 'asc')->findAll();
+        $this->data['products'] = $this->model->getAllProducts();
+        $this->data['pager'] = $this->model->pager;
+
+        $keyword = $this->request->getVar('keyword');
+        if ($keyword != '') {
+            $this->data['products'] = $this->model->getAllProducts($keyword);
+        }
         return view('products/list', $this->data);
     }
 
@@ -46,8 +53,6 @@ class ProductController extends BaseController
             "harga_per_satuan" => esc($dataInput['harga_per_satuan']),
         ];
 
-
-
         $rulesSet = [
             "nama_barang" => [
                 "rules" => "required|is_unique[master_barang.nama_barang]",
@@ -63,15 +68,17 @@ class ProductController extends BaseController
                 ]
             ],
             "kuantitas" => [
-                "rules" => "required",
+                "rules" => "required|max_length[5]",
                 "errors" => [
-                    "required" => "Harap isi {field} terlebih dahulu"
+                    "required" => "Harap isi {field} terlebih dahulu",
+                    "max_length" => "Digit untuk harga satuan maks. 5",
                 ]
             ],
             "harga_per_satuan" => [
-                "rules" => "required",
+                "rules" => "required|max_length[11]",
                 "errors" => [
                     "required" => "Harap isi harga satuan terlebih dahulu",
+                    "max_length" => "Digit untuk harga satuan maks. 11",
                 ]
             ],
             "foto_barang" => [
@@ -91,8 +98,8 @@ class ProductController extends BaseController
 
         $time = Time::now('America/Chicago', 'en_US');
         $foto = $this->request->getFile('foto_barang');
-        $namaFile = $filterData['nama_barang'] . "_" . $time->timestamp . "_" . $foto->getName();
-        $foto->move('img/uploads', $namaFile);
+        $namaFile = $filterData['nama_barang'] . "_" . $time->timestamp . "." . $foto->getExtension();
+        $foto->move('img/uploads/products/', $namaFile);
         $filterData['foto_barang'] = $namaFile;
 
         // Insert ke db
@@ -115,14 +122,12 @@ class ProductController extends BaseController
     {
         $dataInput = $this->request->getVar();
         $existData = $this->model->where('id', $dataInput['id_product'])->first();
-        // dd($dataInput);
         $filterData = [
             "nama_barang" => esc($dataInput['nama_barang']),
             "jenis_barang" => esc($dataInput["jenis_barang"]),
             "kuantitas" => esc($dataInput['kuantitas']),
             "harga_per_satuan" => esc($dataInput['harga_per_satuan']),
         ];
-
 
 
         $rulesSet = [
@@ -139,15 +144,17 @@ class ProductController extends BaseController
                 ]
             ],
             "kuantitas" => [
-                "rules" => "required",
+                "rules" => "required|max_length[5]",
                 "errors" => [
-                    "required" => "Harap isi {field} terlebih dahulu"
+                    "required" => "Harap isi {field} terlebih dahulu",
+                    "max_length" => "Digit untuk harga satuan maks. 5",
                 ]
             ],
             "harga_per_satuan" => [
-                "rules" => "required",
+                "rules" => "required|max_length[11]",
                 "errors" => [
                     "required" => "Harap isi harga satuan terlebih dahulu",
+                    "max_length" => "Digit untuk harga satuan maks. 11",
                 ]
             ],
             "foto_barang" => [
@@ -168,17 +175,15 @@ class ProductController extends BaseController
         }
 
 
-
-        // dd($this->validate($rulesSet));
         if (!$this->validate($rulesSet)) {
             return redirect()->to(base_url('/products/edit/' . $dataInput['id_product']))->withInput();
         }
 
         $foto = $this->request->getFile('foto_barang');
-        // dd($foto->getExtension());
+
         if ($foto->getError() != 4) {
             // Hapus foto yang sudah ada
-            unlink("img/uploads/" . $existData['foto_barang']);
+            unlink("img/uploads/products/" . $existData['foto_barang']);
 
             // Tambahkan foto yang baru
             $time = Time::now('America/Chicago', 'en_US');
@@ -197,7 +202,7 @@ class ProductController extends BaseController
     public function destroy($id)
     {
         $product = $this->model->find($id);
-        unlink("img/uploads/" . $product['foto_barang']);
+        unlink("img/uploads/products/" . $product['foto_barang']);
         $this->model->delete($id);
         session()->setFlashdata('delete', 'Berhasil hapus data');
         return redirect()->to(base_url('/products'));

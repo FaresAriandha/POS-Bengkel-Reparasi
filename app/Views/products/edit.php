@@ -1,7 +1,7 @@
 <?= $this->extend('dashboard/templates/main'); ?>
 
 <?= $this->section('content'); ?>
-<div class="row ms-2">
+<div class="row ms-2 mt-3 mb-5">
   <h1 class="my-3">Form Edit Produk</h1>
   <div class="col-lg-8 border border-2 rounded-3 p-3 shadow">
     <?php $error = session()->get('_ci_validation_errors'); ?>
@@ -50,14 +50,14 @@
       </div>
       <div class="mb-3">
         <label for="foto_barang" class="form-label">Foto Barang</label>
-        <img src="/img/uploads/<?= $product['foto_barang']; ?>" alt="" class="img-preview d-block my-3" width="100">
+        <img src="/img/uploads/products/<?= $product['foto_barang']; ?>" alt="" class="img-preview d-block my-3" width="100">
         <input type="file" class="form-control  <?= isset($error['foto_barang']) ? 'is-invalid' : ''; ?>" name="foto_barang" id="foto_barang">
         <div class="invalid-feedback">
           <?= isset($error['foto_barang']) ? $error['foto_barang'] : ''; ?>
         </div>
       </div>
       <div class="button align-self-end">
-        <a href="/products" type="submit" class="btn btn-danger">Kembali</a>
+        <a href="/products" class="btn btn-danger">Kembali</a>
         <button type="submit" class="btn btn-primary">Ubah</button>
       </div>
     </form>
