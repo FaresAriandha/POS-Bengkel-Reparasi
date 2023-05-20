@@ -267,7 +267,7 @@ class EmployeeController extends BaseController
         $filterData = [
             "username" => $dataAkun['username'],
             "email" => $dataAkun['email'],
-            "password" => password_hash(esc($dataAkun['password']), PASSWORD_BCRYPT),
+            "password" => password_hash(esc($dataAkun['password']), PASSWORD_DEFAULT),
             "role" => $dataAkun['role'],
         ];
 

@@ -1,7 +1,7 @@
 <?= $this->extend('dashboard/templates/main'); ?>
 
 <?= $this->section('content'); ?>
-<div class="row ms-2 mt-3 mb-5">
+<div class="row mt-3 mb-5 px-3">
   <h1 class="my-3">Form Tambah Karyawan</h1>
   <div class="col-lg-8 border border-2 rounded-3 p-3 shadow">
     <?php $error = session()->get('_ci_validation_errors'); ?>

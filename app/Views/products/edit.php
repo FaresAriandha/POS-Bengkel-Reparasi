@@ -1,7 +1,7 @@
 <?= $this->extend('dashboard/templates/main'); ?>
 
 <?= $this->section('content'); ?>
-<div class="row ms-2 mt-3 mb-5">
+<div class="row mt-3 mb-5 px-3">
   <h1 class="my-3">Form Edit Produk</h1>
   <div class="col-lg-8 border border-2 rounded-3 p-3 shadow">
     <?php $error = session()->get('_ci_validation_errors'); ?>
@@ -28,7 +28,7 @@
           </div>
         </select>
       </div>
-      <div class="mb-3 col-2">
+      <div class="mb-3 col-lg-2 col-4">
         <label for="kuantitas" class="form-label">Kuantitas</label>
         <div class="input-group">
           <input type="number" class="form-control  <?= isset($error['kuantitas']) ? 'is-invalid' : ''; ?>" id="kuantitas" name="kuantitas" placeholder="0" value="<?= $product['kuantitas']; ?>">

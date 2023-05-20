@@ -59,7 +59,7 @@ class UserController extends BaseController
         $filterData = [
             "username" => esc($dataInput['username']),
             "email" => esc($dataInput['email']),
-            "password" => password_hash(esc($dataInput['password']), PASSWORD_BCRYPT),
+            "password" => password_hash(esc($dataInput['password']), PASSWORD_DEFAULT),
         ];
 
         $rulesSet = [

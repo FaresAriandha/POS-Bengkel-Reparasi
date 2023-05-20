@@ -63,6 +63,24 @@ $routes->group('employees', ['filter' => 'admin'], static function ($routes) {
 });
 
 
+// Manajemen Pemesanan
+$routes->group('orders', ['filter' => 'auth'], static function ($routes) {
+    $routes->get('/', 'OrderController::index');
+    $routes->get('add', 'OrderController::add');
+    $routes->post('store', 'OrderController::store');
+    $routes->get('delete/(:segment)', 'OrderController::destroy/$1');
+    $routes->get('show', 'OrderController::show');
+    $routes->get('detail-product', 'OrderController::detailProduct');
+});
+
+
+// Manajemen Transaksi
+$routes->group('transactions', ['filter' => 'auth'], static function ($routes) {
+    $routes->get('/', 'TransactionController::index');
+    $routes->get('update/(:segment)', 'TransactionController::update/$1');
+    $routes->get('print/(:segment)', 'TransactionController::print/$1');
+});
+
 
 
 

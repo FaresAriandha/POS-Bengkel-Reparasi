@@ -7,13 +7,13 @@ use CodeIgniter\Model;
 class TransactionModel extends Model
 {
     protected $DBGroup          = 'default';
-    protected $table            = 'transactions';
+    protected $table            = 'transaksi';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = [];
+    protected $allowedFields    = ['id_pesanan', 'status'];
 
     // Dates
     protected $useTimestamps = false;
@@ -38,4 +38,18 @@ class TransactionModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    protected $numberOfPagination = 5;
+    public function getAlltransactions($keyword = null)
+    {
+        if ($keyword) {
+            return $this->select('*')
+                ->whereNotIn('status', ['dibatalkan'])
+                ->like('id_pesanan', '%' . $keyword . '%')
+                ->orLike('status', '%' . $keyword . '%')
+                ->orderBy('id', 'desc')->paginate($this->numberOfPagination, "trasactions");
+        }
+
+        return $this->select('*')->whereNotIn('status', ['dibatalkan'])->paginate($this->numberOfPagination, "trasactions");
+    }
 }

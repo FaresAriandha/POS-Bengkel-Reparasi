@@ -59,13 +59,13 @@
         Manajemen Pemesanan
       </h6>
       <li class="nav-item">
-        <a class="nav-link <?= $menu == "contacts" ? 'active' : ''; ?>" href="<?= base_url('/contacts'); ?>">
+        <a class="nav-link <?= $menu == "orders" ? 'active' : ''; ?>" href="<?= base_url('/orders'); ?>">
           <span data-feather="file-text" class="align-text-bottom"></span>
           Daftar Pesanan
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link <?= $menu == "add_contact" ? 'active' : ''; ?>" href="<?= base_url('/contacts/create'); ?>">
+        <a class="nav-link <?= $menu == "add_order" ? 'active' : ''; ?>" href="<?= base_url('/orders/add'); ?>">
           <span data-feather="file-text" class="align-text-bottom"></span>
           Tambah Pesanan
         </a>
@@ -78,7 +78,7 @@
         Manajemen Transaksi
       </h6>
       <li class="nav-item">
-        <a class="nav-link <?= $menu == "contacts" ? 'active' : ''; ?>" href="<?= base_url('/contacts'); ?>">
+        <a class="nav-link <?= $menu == "transactions" ? 'active' : ''; ?>" href="<?= base_url('/transactions'); ?>">
           <span data-feather="file-text" class="align-text-bottom"></span>
           Daftar Transaksi
         </a>

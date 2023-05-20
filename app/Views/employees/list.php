@@ -34,9 +34,7 @@
               <td class="text-center"><?= $employee['jenis_kelamin']; ?></td>
               <td class="text-center"><span class="badge <?= $employee['role'] == "admin" ? 'bg-primary' : 'bg-warning'; ?> fs-6"><?= ucfirst($employee['role']); ?></span></td>
               <td class="w-full d-flex justify-content-center align-items-center gap-3">
-                <form action="/employees/delete/<?= $employee['id']; ?>" method="post" id="deleteForm">
-                  <button type="button" class="btn btn-danger btn-delete"><i class="bi bi-trash"></i></button>
-                </form>
+                <a href="/employees/delete/<?= $employee['id']; ?>" type="button" class="btn btn-danger btn-delete"><i class="bi bi-trash"></i></a>
                 <button class="btn btn-warning text-white" data-bs-toggle="modal" data-bs-target="#exampleModal<?= $employee['id']; ?>" data-><i class="bi bi-info-circle"></i></button>
                 <a href="/employees/edit/<?= $employee['id']; ?>" class="btn btn-success"><i class="bi bi-pencil-square"></i></a>
               </td>
@@ -133,7 +131,8 @@
       })
     <?php endif; ?>
 
-    $('.btn-delete').on('click', () => {
+    $('.btn-delete').on('click', function(e) {
+      e.preventDefault();
       Swal.fire({
         title: 'Apakah kamu yakin menghapusnya?',
         text: "You won't be able to revert this!",
@@ -145,7 +144,7 @@
         confirmButtonText: 'Ya, hapus data!'
       }).then((result) => {
         if (result.isConfirmed) {
-          $('#deleteForm').submit();
+          window.location.href = `${$(this).attr('href')}`;
         }
       })
     })

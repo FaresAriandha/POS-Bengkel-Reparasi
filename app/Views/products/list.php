@@ -36,9 +36,7 @@
               <td class="text-center"><?= $product['kuantitas']; ?></td>
               <td class="text-center">Rp. <?= number_format($product['harga_per_satuan']); ?></td>
               <td class="w-full d-flex justify-content-center gap-3">
-                <form action="/products/delete/<?= $product['id']; ?>" method="post" id="deleteForm">
-                  <button type="button" class="btn btn-danger btn-delete"><i class="bi bi-trash"></i></button>
-                </form>
+                <a href="/products/delete/<?= $product['id']; ?>" type="button" class="btn btn-danger btn-delete"><i class="bi bi-trash"></i></a>
                 <!-- <button class="btn btn-warning text-white" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-info-circle"></i></button> -->
                 <a href="/products/edit/<?= $product['id']; ?>" class="btn btn-success"><i class="bi bi-pencil-square"></i></a>
               </td>
@@ -104,7 +102,8 @@
       })
     <?php endif; ?>
 
-    $('.btn-delete').on('click', () => {
+    $('.btn-delete').on('click', function(e) {
+      e.preventDefault();
       Swal.fire({
         title: 'Apakah kamu yakin menghapusnya?',
         text: "You won't be able to revert this!",
@@ -116,7 +115,7 @@
         confirmButtonText: 'Ya, hapus data!'
       }).then((result) => {
         if (result.isConfirmed) {
-          $('#deleteForm').submit();
+          window.location.href = `${$(this).attr('href')}`;
         }
       })
     })
