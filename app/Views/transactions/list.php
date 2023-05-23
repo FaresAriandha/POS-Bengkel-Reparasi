@@ -38,10 +38,12 @@
               }
               ?>
               <td class="text-center"><span class="badge <?= $bg_badge; ?> fs-6"><?= ucfirst($trx['status']); ?></span></td>
-              <td class="w-full d-flex justify-content-center gap-3">
-                <?php if ($trx['status'] == 'sukses') : ?>
-                  <a href="/transactions/print/<?= $trx['id_pesanan']; ?>" class="btn btn-success"><i class="bi bi-pencil-square"></i></a>
-                <?php endif; ?>
+              <td class="align-middle text-center">
+                <div class="w-full d-flex justify-content-center gap-3">
+                  <?php if ($trx['status'] == 'sukses') : ?>
+                    <button type="button" id="btn-print" class="btn btn-primary px-2 py-1" data-id="<?= $trx['id_pesanan']; ?>"><i class="bi bi-file-text fs-5"></i></button>
+                  <?php endif; ?>
+                </div>
               </td>
             </tr>
             <?php $no++ ?>
@@ -63,29 +65,22 @@
 
 <script>
   $(function() {
-    <?php if (session()->has("add")) : ?>
+    $('#btn-print').on('click', function() {
       Swal.fire({
-        icon: 'success',
-        title: 'Sukses!',
-        text: '<?= session("add") ?>'
+        title: 'Print Bukti Transaksi',
+        text: "Apakah anda ingin mencetaknya?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Nanti saja',
+        confirmButtonText: 'Ya, print!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = `/transactions/print/${$(this).data('id')}`;
+        }
       })
-    <?php endif; ?>
-
-    <?php if (session()->has("delete")) : ?>
-      Swal.fire({
-        icon: 'success',
-        title: 'Sukses!',
-        text: '<?= session("delete") ?>'
-      })
-    <?php endif; ?>
-
-    <?php if (session()->has("update")) : ?>
-      Swal.fire({
-        icon: 'success',
-        title: 'Sukses!',
-        text: '<?= session("update") ?>'
-      })
-    <?php endif; ?>
+    })
   });
 </script>
 <?= $this->endSection(); ?>

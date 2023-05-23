@@ -1,15 +1,15 @@
 <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
   <div class="position-sticky pt-3 sidebar-sticky">
 
+    <ul class="nav flex-column">
+      <li class="nav-item">
+        <a class="nav-link <?= $menu == "dashboard" ? 'active' : ''; ?>" aria-current="page" href="<?= base_url('/dashboard'); ?>">
+          <span data-feather="home" class="align-text-bottom"></span>
+          Dashboard
+        </a>
+      </li>
+    </ul>
     <?php if (session()->get('logged_in')['role'] == 'admin') : ?>
-      <ul class="nav flex-column">
-        <li class="nav-item">
-          <a class="nav-link <?= $menu == "dashboard" ? 'active' : ''; ?>" aria-current="page" href="<?= base_url('/dashboard'); ?>">
-            <span data-feather="home" class="align-text-bottom"></span>
-            Dashboard
-          </a>
-        </li>
-      </ul>
 
       <!-- Barang -->
       <ul class="nav flex-column">
@@ -84,5 +84,19 @@
         </a>
       </li>
     </ul>
+
+    <!-- Manajemen Akun-->
+    <ul class="nav flex-column">
+      <h6 class="sidebar-heading text-muted d-flex flex-col justify-content-between align-items-center px-3 mt-4 fs-6 fw-bold">
+        Manajemen Akun
+      </h6>
+      <li class="nav-item">
+        <a class="nav-link <?= $menu == "users" ? 'active' : ''; ?>" href="<?= base_url('/users/' . session()->get('logged_in')['username']); ?>">
+          <span data-feather="user" class="align-text-bottom"></span>
+          Ubah Profil
+        </a>
+      </li>
+    </ul>
+
   </div>
 </nav>

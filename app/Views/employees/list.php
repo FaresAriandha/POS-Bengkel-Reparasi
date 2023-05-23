@@ -33,10 +33,12 @@
               <td class="text-center"><img src="<?= base_url('img/uploads/employees/' . $employee['foto_karyawan']); ?>" alt="" width="150" height="100"></td>
               <td class="text-center"><?= $employee['jenis_kelamin']; ?></td>
               <td class="text-center"><span class="badge <?= $employee['role'] == "admin" ? 'bg-primary' : 'bg-warning'; ?> fs-6"><?= ucfirst($employee['role']); ?></span></td>
-              <td class="w-full d-flex justify-content-center align-items-center gap-3">
-                <a href="/employees/delete/<?= $employee['id']; ?>" type="button" class="btn btn-danger btn-delete"><i class="bi bi-trash"></i></a>
-                <button class="btn btn-warning text-white" data-bs-toggle="modal" data-bs-target="#exampleModal<?= $employee['id']; ?>" data-><i class="bi bi-info-circle"></i></button>
-                <a href="/employees/edit/<?= $employee['id']; ?>" class="btn btn-success"><i class="bi bi-pencil-square"></i></a>
+              <td class="align-middle text-center">
+                <div class="w-full d-flex justify-content-center align-items-center gap-3">
+                  <a href="/employees/delete/<?= $employee['id']; ?>" type="button" class="btn btn-danger btn-delete"><i class="bi bi-trash"></i></a>
+                  <button class="btn btn-warning text-white" data-bs-toggle="modal" data-bs-target="#exampleModal<?= $employee['id']; ?>" data-><i class="bi bi-info-circle"></i></button>
+                  <a href="/employees/edit/<?= $employee['id']; ?>" class="btn btn-success"><i class="bi bi-pencil-square"></i></a>
+                </div>
               </td>
             </tr>
             <?php $no++ ?>
@@ -78,6 +80,7 @@
                             <span class="fw-bold">Username</span>
                             <span class="d-block fs-6"><?= $employee['username']; ?></span>
                           </li>
+                          <span class="text-danger">* Username dan password sementara sama</span>
                         </ul>
                       </div>
                     </div>

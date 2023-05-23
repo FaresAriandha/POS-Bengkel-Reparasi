@@ -99,11 +99,12 @@ class EmployeeController extends BaseController
                 ]
             ],
             "email" => [
-                "rules" => "required|valid_email|max_length[50]",
+                "rules" => "required|valid_email|max_length[50]|is_unique[master_pengguna.email]",
                 "errors" => [
                     "required" => "Harap isi {field} terlebih dahulu",
                     "valid_email" => "format {field} salah",
                     "max_length" => "{field} maksimal karakter 50",
+                    "is_unique" => "{field} sudah terdaftar",
                 ]
             ],
         ];
@@ -220,6 +221,16 @@ class EmployeeController extends BaseController
             ];
         }
 
+        if ($filterData['email'] != $existData['email']) {
+            $rulesSet['email']['rules'] = 'required|valid_email|max_length[50]|is_unique[master_pengguna.email]';
+            $rulesSet['email']['errors'] = [
+                "required" => "Harap isi {field} terlebih dahulu",
+                "valid_email" => "format {field} salah",
+                "max_length" => "{field} maksimal karakter 50",
+                "is_unique" => "{field} sudah terdaftar",
+            ];
+        }
+
         // Validasi
         if (!$this->validate($rulesSet)) {
             return redirect()->to(base_url('/employees/edit/' . $dataInput['id_karyawan']))->withInput();
@@ -243,7 +254,7 @@ class EmployeeController extends BaseController
             "role" => esc($filterData['role']),
         ];
         // dd($existData);
-        $this->updateAcc($dataAkun, $existData['id_akun']);
+        $this->user->update($existData['id_akun'], $dataAkun);
 
         // Insert ke db karyawan
         $this->model->update($dataInput['id_karyawan'], $filterData);
@@ -273,12 +284,5 @@ class EmployeeController extends BaseController
 
         // Insert ke db
         $this->user->insert($filterData);
-    }
-
-
-    public function updateAcc($dataAkun = [], $id)
-    {
-        // Insert ke db
-        $this->user->update($id, $dataAkun);
     }
 }

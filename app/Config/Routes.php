@@ -29,13 +29,15 @@ $routes->set404Override();
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', 'Home::index');
+$routes->get('/', static function () {
+    return redirect()->to(base_url('/login'));
+});
 
 // Login dan Register
 $routes->get('/login', 'UserController::login', ['filter' => 'guest']);
 $routes->post('/login', 'UserController::authenticate', ['filter' => 'guest']);
-$routes->get('/register', 'UserController::register', ['filter' => 'guest']);
-$routes->post('/register/store', 'UserController::store', ['filter' => 'guest']);
+// $routes->get('/register', 'UserController::register', ['filter' => 'guest']);
+// $routes->post('/register/store', 'UserController::store', ['filter' => 'guest']);
 $routes->post('/logout', 'UserController::logout', ['filter' => 'auth']);
 
 
@@ -49,7 +51,7 @@ $routes->group('products', ['filter' => 'admin'], static function ($routes) {
     $routes->get('edit/(:num)', 'ProductController::edit/$1');
     $routes->post('store', 'ProductController::store');
     $routes->post('update', 'ProductController::update');
-    $routes->post('delete/(:num)', 'ProductController::destroy/$1');
+    $routes->get('delete/(:num)', 'ProductController::destroy/$1');
 });
 
 // Manajemen Karyawan
@@ -59,7 +61,7 @@ $routes->group('employees', ['filter' => 'admin'], static function ($routes) {
     $routes->get('edit/(:num)', 'EmployeeController::edit/$1');
     $routes->post('store', 'EmployeeController::store');
     $routes->post('update', 'EmployeeController::update');
-    $routes->post('delete/(:num)', 'EmployeeController::destroy/$1');
+    $routes->get('delete/(:num)', 'EmployeeController::destroy/$1');
 });
 
 
@@ -71,6 +73,7 @@ $routes->group('orders', ['filter' => 'auth'], static function ($routes) {
     $routes->get('delete/(:segment)', 'OrderController::destroy/$1');
     $routes->get('show', 'OrderController::show');
     $routes->get('detail-product', 'OrderController::detailProduct');
+    $routes->get('print', 'OrderController::print');
 });
 
 
@@ -79,6 +82,14 @@ $routes->group('transactions', ['filter' => 'auth'], static function ($routes) {
     $routes->get('/', 'TransactionController::index');
     $routes->get('update/(:segment)', 'TransactionController::update/$1');
     $routes->get('print/(:segment)', 'TransactionController::print/$1');
+});
+
+
+// Manajemen Akun
+$routes->group('users', ['filter' => 'auth'], static function ($routes) {
+    $routes->get('(:segment)', 'UserController::edit/$1');
+    $routes->post('update', 'UserController::update');
+    $routes->post('show', 'UserController::show');
 });
 
 

@@ -50,14 +50,12 @@ class TransactionController extends BaseController
         // $this->model->delete($id);
         // dd($id);
         $data_pesanan['data'] = $this->order->getDetailPesanan($id);
-        return view('/transactions/print', $data_pesanan);
-        // $content = ob_get_clean();
-        // $dompdf = new \Dompdf\Dompdf();
-        // $dompdf->loadHtml(view('/transactions/print', $data_pesanan));
-        // $dompdf->setPaper('A4', 'landscape');
-        // $dompdf->render();
-        // $dompdf->stream();
-        // dd($data_pesanan);
-        // session()->setFlashdata('delete', 'Berhasil hapus data');
+        // $imageUrl = (string) Image::make(public_path($path))->fit(80, 80)->encode('data-url');
+        // return view('/transactions/print', $data_pesanan);
+        $dompdf = new Dompdf();
+        $dompdf->loadHtml(view('/transactions/print', $data_pesanan));
+        $dompdf->setPaper('A4', 'landscape');
+        $dompdf->render();
+        $dompdf->stream();
     }
 }

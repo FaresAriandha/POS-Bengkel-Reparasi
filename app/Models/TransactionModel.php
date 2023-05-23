@@ -47,9 +47,9 @@ class TransactionModel extends Model
                 ->whereNotIn('status', ['dibatalkan'])
                 ->like('id_pesanan', '%' . $keyword . '%')
                 ->orLike('status', '%' . $keyword . '%')
-                ->orderBy('id', 'desc')->paginate($this->numberOfPagination, "trasactions");
+                ->orderBy('id_pesanan', 'desc')->paginate($this->numberOfPagination, "transactions");
         }
 
-        return $this->select('*')->whereNotIn('status', ['dibatalkan'])->paginate($this->numberOfPagination, "trasactions");
+        return $this->select('*')->whereNotIn('status', ['dibatalkan'])->orderBy('id_pesanan', 'desc')->paginate($this->numberOfPagination, "transactions");
     }
 }

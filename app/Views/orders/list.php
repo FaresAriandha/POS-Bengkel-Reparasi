@@ -4,7 +4,21 @@
 <div class="row my-5">
   <h1>Daftar Pesanan</h1>
   <div class="add-search d-flex w-full justify-content-between mt-3 mb-3">
-    <a href="/orders/add" class="btn btn-primary h-fit">Tambah Pesanan</a>
+    <?php
+
+    use App\Models\TransactionModel;
+
+    $request = \Config\Services::request();
+    $keyword = "";
+    if ($request->getGet('keyword') && $request->getGet('keyword') != '') {
+      $keyword = $request->getGet('keyword');
+    }
+    $trx = new TransactionModel()
+    ?>
+    <div class="button-group">
+      <a href="/orders/add" class="btn btn-primary h-fit">Tambah Pesanan</a>
+      <a href="<?= base_url('/orders/print?keyword=' . $keyword); ?>" class="btn btn-warning h-fit">Cetak XLS</a>
+    </div>
     <form class="d-flex" role="search" action="/orders" method="GET">
       <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="keyword" value="<?= isset($_GET['keyword']) ? $_GET['keyword'] : ''; ?>">
       <button class="btn btn-outline-success" type="submit">Search</button>
@@ -19,8 +33,9 @@
           <th scope="col">ID Pesanan</th>
           <th scope="col">Tanggal Pemesanan</th>
           <th scope="col">Total Barang</th>
-          <th scope="col">Total Harga</th>
+          <th scope="col">Total Belanja</th>
           <th scope="col">Nama Pembeli</th>
+          <th scope="col">Status Bayar</th>
           <th scope="col">Aksi</th>
         </tr>
       </thead>
@@ -35,9 +50,21 @@
               <td class="text-center"><?= number_format($order['total_barang']); ?></td>
               <td class="text-center">Rp. <?= number_format($order['total_harga']); ?></td>
               <td class="text-center"><?= $order['nama_pembeli']; ?></td>
-              <td class="w-full d-flex justify-content-center align-items-center gap-3">
-                <a href="/orders/delete/<?= $order['id_pesanan']; ?>" type="button" class="btn btn-danger btn-delete"><i class="bi bi-trash "></i></a>
-                <button class="btn btn-warning text-white btn-info-pesanan" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id-pesanan="<?= $order['id_pesanan']; ?>"><i class="bi bi-info-circle btn-info-pesanan" data-id-pesanan="<?= $order['id_pesanan']; ?>"></i></button>
+              <?php
+              $bg_badge = '';
+              $status = $trx->where('id_pesanan', $order['id_pesanan'])->first()['status'];
+              if ($status == 'pending') {
+                $bg_badge = 'bg-warning';
+              } elseif ($status == 'sukses') {
+                $bg_badge = 'bg-success';
+              }
+              ?>
+              <td class="text-center"><span class="badge fs-6 <?= $bg_badge; ?>"><?= $status; ?></span></td>
+              <td class="align-middle text-center">
+                <div class="w-full d-flex justify-content-center align-items-center gap-3">
+                  <a href="/orders/delete/<?= $order['id_pesanan']; ?>" type="button" class="btn btn-danger btn-delete"><i class="bi bi-trash "></i></a>
+                  <button class="btn btn-warning text-white btn-info-pesanan" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id-pesanan="<?= $order['id_pesanan']; ?>"><i class="bi bi-info-circle btn-info-pesanan" data-id-pesanan="<?= $order['id_pesanan']; ?>"></i></button>
+                </div>
               </td>
             </tr>
             <?php $no++ ?>
@@ -107,7 +134,7 @@
               </div>
             </div>
           </div>
-          <div class="modal-footer">
+          <div class="modal-footer d-none">
             <a href='/transactions/update' type="button" class="btn btn-success" id="btn-bayar">Sudah Bayar</a>
           </div>
         </div>
@@ -194,7 +221,13 @@
       $("#id_pesanan").text(data.orders[0].id_pesanan)
       $("#nama_pembeli").text(data.orders[0].nama_pembeli)
       $(".modal-header h1").text(`Data Pesanan ${data.orders[0].id_pesanan}`)
-      $("#btn-bayar").attr('href', `/transactions/update/${data.orders[0].id_pesanan}`)
+
+      if (data.status == 'pending') {
+        $('.modal-footer').removeClass('d-none')
+        $("#btn-bayar").attr('href', `/transactions/update/${data.orders[0].id_pesanan}`)
+      } else {
+        $('.modal-footer').addClass('d-none')
+      }
 
 
       const date = new Date(data.orders[0].tgl_pemesanan)

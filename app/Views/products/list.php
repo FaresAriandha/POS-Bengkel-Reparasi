@@ -35,10 +35,11 @@
               <td class="text-center"><?= $product['jenis_barang']; ?></td>
               <td class="text-center"><?= $product['kuantitas']; ?></td>
               <td class="text-center">Rp. <?= number_format($product['harga_per_satuan']); ?></td>
-              <td class="w-full d-flex justify-content-center gap-3">
-                <a href="/products/delete/<?= $product['id']; ?>" type="button" class="btn btn-danger btn-delete"><i class="bi bi-trash"></i></a>
-                <!-- <button class="btn btn-warning text-white" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-info-circle"></i></button> -->
-                <a href="/products/edit/<?= $product['id']; ?>" class="btn btn-success"><i class="bi bi-pencil-square"></i></a>
+              <td class="align-middle text-center">
+                <div class="w-full d-flex justify-content-center gap-3 ">
+                  <a href="/products/delete/<?= $product['id']; ?>" type="button" class="btn btn-danger btn-delete"><i class="bi bi-trash"></i></a>
+                  <a href="/products/edit/<?= $product['id']; ?>" class="btn btn-success"><i class="bi bi-pencil-square"></i></a>
+                </div>
               </td>
             </tr>
             <?php $no++ ?>

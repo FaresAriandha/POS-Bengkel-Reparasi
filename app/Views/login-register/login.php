@@ -1,18 +1,18 @@
 <?= $this->extend('templates/main') ?>
 
 <?= $this->section('content')  ?>
-<div class="vh-100 vw-100 d-flex align-items-center justify-content-center overflow-hidden" style="background-image: url('img/login.jpg'); background-repeat: no-repeat; background-size: cover;">
-  <div class="col-8 col-lg-4 p-3" style="
-background: rgba(255, 255, 255, 0.2);
-border-radius: 16px;
-box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-backdrop-filter: blur(5px);
--webkit-backdrop-filter: blur(5px);
-border: 1px solid rgba(255, 255, 255, 0.3);">
+<div class="vh-100 vw-100 d-flex align-items-center justify-content-center overflow-hidden" style="background-image: url('img/bengkel-motor.jpg'); background-repeat: no-repeat; background-size: cover;">
+  <div class="col-8 col-lg-4 p-3" style=" position: relative;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);">
     <main class="form-signin w-100 mb-3">
       <div class="w-100 d-flex flex-column justify-content-between align-items-center mb-4" style="height: 100px;">
-        <img src="img/google.png" alt="" width="50" height="50" class="-top-3">
-        <h1 class="h2 mb-4 mt-2 fw-semibold text-center fs-2">Please Login</h1>
+        <img src="img/motorbike.png" alt="" width="100" height="100" style="position: absolute; top: -50px;">
+        <h1 class="h2 mb-4 mt-2 fw-semibold text-center fs-2 text-white p-2 bg-danger rounded" style="position: absolute; top: 60px;">Login Page</h1>
       </div>
       <?php $error = session()->get('_ci_validation_errors'); ?>
 
@@ -45,10 +45,10 @@ border: 1px solid rgba(255, 255, 255, 0.3);">
           </div>
         </div>
         <div class="form-floating">
-          <input type="password" class="form-control <?= isset($error['username']) ? 'is-invalid' : ''; ?>" name="password" id="password" placeholder="Password">
+          <input type="password" class="form-control <?= isset($error['password']) ? 'is-invalid' : ''; ?>" name="password" id="password" placeholder="Password">
           <label for="password">Password</label>
           <div class="invalid-feedback">
-            <?= isset($error['username']) ? $error['username'] : ''; ?>
+            <?= isset($error['password']) ? $error['password'] : ''; ?>
           </div>
         </div>
 
@@ -56,8 +56,8 @@ border: 1px solid rgba(255, 255, 255, 0.3);">
       </form>
     </main>
 
-    <span class="fs-5 mt-2 d-flex align-items-center justify-content-center">Login With<a href="" class="d-inline-block ms-2"><img src="img/google.png" width="28" height="28"></a></span>
-    <small class="d-block mt-3 text-center">Not registered ? <a href="/register" class="text-decoration-none">Register Now!</a></small>
+    <!-- <span class="fs-5 mt-2 d-flex align-items-center justify-content-center">Login With<a href="" class="d-inline-block ms-2"><img src="img/google.png" width="28" height="28"></a></span> -->
+    <!-- <small class="d-block mt-3 text-center text-white">Not registered ? <a href="/register" class="text-decoration-none text-warning">Register Now!</a></small> -->
   </div>
 </div>
 <?= $this->endSection(); ?>

@@ -174,6 +174,7 @@
         })
         .then(response => response.json())
         .then(response => {
+          console.log(response.product);
           response.product.qty = parseInt($('#jumlah').val())
           if (response.product.qty > response.product.kuantitas) {
             Swal.fire({
@@ -181,11 +182,13 @@
               title: 'Peringatan!',
               text: `Barang ${response.product.nama_barang} hanya tersedia ${response.product.kuantitas} stok`
             })
-            $('#id_barang').val('')
+            // $('.stok').text(``)
+            // $('#id_barang').val('')
             $('#jumlah').val('')
             return false
           }
           templateBarisProduk(response.product)
+          $('.stok').text(``)
           $('#id_barang').val('')
           $('#jumlah').val('')
 
@@ -208,7 +211,7 @@
 
     $('body').on('click', function(e) {
       if ($(e.target).hasClass('btn-delete')) {
-        $(e.target).parent().parent().parent().empty();
+        $(e.target).parent().parent().parent().remove();
       }
       calculate_total();
     })
