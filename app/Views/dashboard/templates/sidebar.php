@@ -24,7 +24,7 @@
         </li>
         <li class="nav-item">
           <a class="nav-link <?= $menu == "add_product" ? 'active' : ''; ?>" href="<?= base_url('/products/add'); ?>">
-            <span data-feather="file-text" class="align-text-bottom"></span>
+            <span data-feather="file-plus" class="align-text-bottom"></span>
             Tambah Barang
           </a>
         </li>
@@ -44,7 +44,7 @@
         </li>
         <li class="nav-item">
           <a class="nav-link <?= $menu == "add_employee" ? 'active' : ''; ?>" href="<?= base_url('/employees/add'); ?>">
-            <span data-feather="file-text" class="align-text-bottom"></span>
+            <span data-feather="file-plus" class="align-text-bottom"></span>
             Tambah Karyawan
           </a>
         </li>
@@ -66,7 +66,7 @@
       </li>
       <li class="nav-item">
         <a class="nav-link <?= $menu == "add_order" ? 'active' : ''; ?>" href="<?= base_url('/orders/add'); ?>">
-          <span data-feather="file-text" class="align-text-bottom"></span>
+          <span data-feather="file-plus" class="align-text-bottom"></span>
           Tambah Pesanan
         </a>
       </li>

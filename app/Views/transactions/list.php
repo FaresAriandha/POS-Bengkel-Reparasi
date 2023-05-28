@@ -41,7 +41,7 @@
               <td class="align-middle text-center">
                 <div class="w-full d-flex justify-content-center gap-3">
                   <?php if ($trx['status'] == 'sukses') : ?>
-                    <button type="button" id="btn-print" class="btn btn-primary px-2 py-1" data-id="<?= $trx['id_pesanan']; ?>"><i class="bi bi-file-text fs-5"></i></button>
+                    <button type="button" class="btn btn-primary px-2 py-1 btn-print" data-id="<?= $trx['id_pesanan']; ?>"><i class="bi bi-file-text fs-5"></i></button>
                   <?php endif; ?>
                 </div>
               </td>
@@ -65,7 +65,7 @@
 
 <script>
   $(function() {
-    $('#btn-print').on('click', function() {
+    $('.btn-print').on('click', function() {
       Swal.fire({
         title: 'Print Bukti Transaksi',
         text: "Apakah anda ingin mencetaknya?",
@@ -77,7 +77,8 @@
         confirmButtonText: 'Ya, print!'
       }).then((result) => {
         if (result.isConfirmed) {
-          window.location.href = `/transactions/print/${$(this).data('id')}`;
+          window.open(`/transactions/print/${$(this).data('id')}`, '_blank');
+          // window.b
         }
       })
     })

@@ -47,7 +47,7 @@ class OrderController extends BaseController
     {
         $this->data['page_title'] = "Add Order";
         $this->data['menu'] = "add_order";
-        $this->data['products'] = $this->product->findAll();
+        $this->data['products'] = $this->product->where('kuantitas > 0')->findAll();
         return view('orders/add', $this->data);
     }
 

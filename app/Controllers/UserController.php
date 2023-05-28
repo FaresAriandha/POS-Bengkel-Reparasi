@@ -151,13 +151,14 @@ class UserController extends BaseController
 
     public function show()
     {
-        $data = $this->request->getVar();
-        // $username = $this->request->getVar('username');
-        // dd('he');
-        $passwordExist = $this->model->where('username', $data->username)->first()['password'];
+        // $data = $this->request->getVar();
+        $username = $this->request->getVar('username');
+        $password = $this->request->getVar('password');
+        // dd($data);
+        $passwordExist = $this->model->where('username', $username)->first()['password'];
         $response['status'] = 200;
         $response['message'] = "Password cocok!";
-        if (!password_verify($data->password, $passwordExist)) {
+        if (!password_verify($password, $passwordExist)) {
             $response['status'] = "404";
             $response['message'] = "Password tidak cocok!";
             return json_encode($response);
@@ -168,7 +169,7 @@ class UserController extends BaseController
     public function edit($username)
     {
         // $username = $this->request->getVar('username');
-        // dd('he');
+        // dd(session()->get('logged_in')['username']);
         $this->data['page_title'] = "Edit Akun";
         $this->data['menu'] = "users";
         $this->data['user'] = $this->model->where('username', $username)->first();

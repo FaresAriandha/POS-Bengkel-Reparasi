@@ -24,6 +24,7 @@ class Filters extends BaseConfig
         'auth'          => \App\Filters\AuthGuard::class,
         'admin'          => \App\Filters\AdminGuard::class,
         'guest'         => \App\Filters\GuestGuard::class,
+        'user'         => \App\Filters\AccountUserGuard::class,
     ];
 
     /**

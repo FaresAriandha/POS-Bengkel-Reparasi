@@ -135,7 +135,7 @@
             </div>
           </div>
           <div class="modal-footer d-none">
-            <a href='/transactions/update' type="button" class="btn btn-success" id="btn-bayar">Sudah Bayar</a>
+            <a href='/transactions/update' target="_blank" class="btn btn-success" id="btn-bayar">Sudah Bayar</a>
           </div>
         </div>
       </div>
@@ -177,95 +177,94 @@
         confirmButtonText: 'Ya, print!'
       }).then((result) => {
         if (result.isConfirmed) {
-          window.location.href = '<?= session("update") ?>';
+          window.open('<?= session("update") ?>', '_blank');
         }
-      })
-    <?php endif; ?>
+      }) <?php endif; ?>
 
-    $('.btn-delete').on('click', function(e) {
-      e.preventDefault();
-      Swal.fire({
-        title: 'Apakah kamu yakin menghapusnya?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        cancelButtonText: 'Batalkan',
-        confirmButtonText: 'Ya, hapus data!'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          window.location.href = `${$(this).attr('href')}`;
+      $('.btn-delete').on('click', function(e) {
+        e.preventDefault();
+        Swal.fire({
+          title: 'Apakah kamu yakin menghapusnya?',
+          text: "You won't be able to revert this!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          cancelButtonText: 'Batalkan',
+          confirmButtonText: 'Ya, hapus data!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = `${$(this).attr('href')}`;
+          }
+        })
+      })
+
+
+      // Create our number formatter.
+      const formatter = new Intl.NumberFormat('id-ID', {
+        style: 'currency',
+        currency: 'IDR',
+        maximumFractionDigits: 0
+      });
+
+      const templateModalDetailPesanan = (data) => {
+        let str = '';
+        let no = 0;
+
+        const options = {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+          hours: "numeric",
+        };
+        $("#id_pesanan").text(data.orders[0].id_pesanan)
+        $("#nama_pembeli").text(data.orders[0].nama_pembeli)
+        $(".modal-header h1").text(`Data Pesanan ${data.orders[0].id_pesanan}`)
+
+        if (data.status == 'pending') {
+          $('.modal-footer').removeClass('d-none')
+          $("#btn-bayar").attr('href', `/transactions/update/${data.orders[0].id_pesanan}`)
+        } else {
+          $('.modal-footer').addClass('d-none')
         }
-      })
-    })
 
 
-    // Create our number formatter.
-    const formatter = new Intl.NumberFormat('id-ID', {
-      style: 'currency',
-      currency: 'IDR',
-      maximumFractionDigits: 0
-    });
+        const date = new Date(data.orders[0].tgl_pemesanan)
+        $("#tgl_pemesanan").text(`${date.toLocaleString('id-ID', options)}, ${date.getHours()}:${date.getMinutes()} WIB`)
 
-    const templateModalDetailPesanan = (data) => {
-      let str = '';
-      let no = 0;
-
-      const options = {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-        hours: "numeric",
-      };
-      $("#id_pesanan").text(data.orders[0].id_pesanan)
-      $("#nama_pembeli").text(data.orders[0].nama_pembeli)
-      $(".modal-header h1").text(`Data Pesanan ${data.orders[0].id_pesanan}`)
-
-      if (data.status == 'pending') {
-        $('.modal-footer').removeClass('d-none')
-        $("#btn-bayar").attr('href', `/transactions/update/${data.orders[0].id_pesanan}`)
-      } else {
-        $('.modal-footer').addClass('d-none')
-      }
-
-
-      const date = new Date(data.orders[0].tgl_pemesanan)
-      $("#tgl_pemesanan").text(`${date.toLocaleString('id-ID', options)}, ${date.getHours()}:${date.getMinutes()} WIB`)
-
-      data.orders.forEach(d => {
-        str += `<tr>
+        data.orders.forEach(d => {
+          str += `<tr>
                       <th scope="row" class="text-center">${++no}</th>
                       <td>${d.nama_barang}</td>
                       <td class="text-center">${d.jumlah}</td>
                       <td class="text-center">${formatter.format(d.harga_barang)}</td>
                       <td class="text-end">${formatter.format(d.total_harga_per_barang)}</td>
                     </tr>`;
-      });
+        });
 
-      str += `<tr id="total_belanja">
+        str += `<tr id="total_belanja">
                       <td colspan="4" class="text-center">Total Belanja</td>
                       <td class="text-end">${formatter.format(data.price.total_belanja)}</td>
                     </tr>`
 
-      $('#modal-table').html(str);
-      $('#exampleModal').modal('show');
-    }
-
-    $("body").on('click', function(e) {
-      if ($(e.target).hasClass('btn-info-pesanan')) {
-        const data = {
-          id: $(e.target).data('id-pesanan')
-        }
-
-        fetch(`http://localhost:8081/orders/show?id=${data.id}`, {
-            METHOD: 'GET',
-          })
-          .then(response => response.json())
-          .then(response => templateModalDetailPesanan(response.data))
+        $('#modal-table').html(str);
+        $('#exampleModal').modal('show');
       }
 
-    })
+      $("body").on('click', function(e) {
+        if ($(e.target).hasClass('btn-info-pesanan')) {
+          const data = {
+            id: $(e.target).data('id-pesanan')
+          }
+
+          fetch(`http://localhost:8081/orders/show?id=${data.id}`, {
+              METHOD: 'GET',
+            })
+            .then(response => response.json())
+            .then(response => templateModalDetailPesanan(response.data))
+        }
+
+      })
   });
 </script>
 <?= $this->endSection(); ?>

@@ -44,18 +44,13 @@ class TransactionController extends BaseController
 
     public function print($id)
     {
-        // ob_start();
-        // $product = $this->model->find($id);
-        // unlink("img/uploads/products/" . $product['foto_barang']);
-        // $this->model->delete($id);
-        // dd($id);
         $data_pesanan['data'] = $this->order->getDetailPesanan($id);
-        // $imageUrl = (string) Image::make(public_path($path))->fit(80, 80)->encode('data-url');
-        // return view('/transactions/print', $data_pesanan);
+        $id_Transaksi = $this->order->where('id_pesanan', $id)->first()['id_pesanan'];
+        $data_pesanan['page_title'] = "Bukti Transaksi - $id_Transaksi";
         $dompdf = new Dompdf();
         $dompdf->loadHtml(view('/transactions/print', $data_pesanan));
         $dompdf->setPaper('A4', 'landscape');
         $dompdf->render();
-        $dompdf->stream();
+        $dompdf->stream("Bukti Transaksi $id_Transaksi.pdf", array("Attachment" => false));
     }
 }

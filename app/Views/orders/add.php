@@ -21,6 +21,17 @@
             <?php endforeach; ?>
           </select>
         </div>
+        <!-- <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+          <label for="id_barang" class="control-label mb-2">Pilih Produk</label>
+          <select id="js-example-basic-single" class="form-select rounded-0">
+            <option value="" disabled selected>Pilih salah satu</option>
+            <?php
+            foreach ($products as $row) :
+            ?>
+              <option value="<?= $row['id'] ?>" data-price="<?= $row['harga_per_satuan'] ?>"><?= $row['nama_barang'] ?></option>
+            <?php endforeach; ?>
+          </select>
+        </div> -->
         <div class="col-lg-2 col-md-6 col-sm-12 col-xs-12">
           <label for="jumlah" class="control-label mb-2">Jumlah Produk <span class="fw-semibold stok"></span></label>
           <div class="input-group">
@@ -106,6 +117,15 @@
 <script>
   $(function() {
     let subtotal = 0;
+
+    // Select2
+    // $('#id_barang').select2();
+    $('#id_barang').select2({
+      theme: "bootstrap-5",
+      width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+      placeholder: $(this).data('placeholder'),
+    });
+
     // Create our number formatter.
     const formatter = new Intl.NumberFormat('id-ID', {
       style: 'currency',
@@ -174,7 +194,6 @@
         })
         .then(response => response.json())
         .then(response => {
-          console.log(response.product);
           response.product.qty = parseInt($('#jumlah').val())
           if (response.product.qty > response.product.kuantitas) {
             Swal.fire({

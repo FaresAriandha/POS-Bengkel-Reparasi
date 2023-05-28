@@ -60,6 +60,14 @@
     })
   <?php endif; ?>
 
+  <?php if (session()->has("other")) : ?>
+    Swal.fire({
+      icon: 'warning',
+      title: 'Peringatan!',
+      text: '<?= session("other") ?>'
+    })
+  <?php endif; ?>
+
   $('.btn-password').on('click', function() {
     if ($('.passchange').attr('readonly')) {
       $('.passchange').removeAttr('readonly');
@@ -108,10 +116,7 @@
       })
       .then(response => response.json())
       .then(response => {
-        // $('.info-password').text(response.message)
         if (response.status == 200) {
-          // $('.info-password').removeClass('text-danger')
-          // $('.info-password').addClass('text-success')
           Swal.fire({
             icon: 'success',
             title: 'Password ditemukan',
@@ -125,6 +130,7 @@
           })
         }
       })
+    // .catch(err => console.log(err))
   })
 
   $('#btn-update').on('click', function() {

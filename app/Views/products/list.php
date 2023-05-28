@@ -33,7 +33,11 @@
               <td><?= $product['nama_barang']; ?></td>
               <td class="text-center"><img src="<?= base_url('img/uploads/products/' . $product['foto_barang']); ?>" alt="" width="150" height="100"></td>
               <td class="text-center"><?= $product['jenis_barang']; ?></td>
-              <td class="text-center"><?= $product['kuantitas']; ?></td>
+              <?php if ($product['kuantitas'] > 0) : ?>
+                <td class="text-center"><?= $product['kuantitas']; ?></td>
+              <?php else : ?>
+                <td class="text-center"><span class="badge bg-danger fs-6">Habis</span></td>
+              <?php endif; ?>
               <td class="text-center">Rp. <?= number_format($product['harga_per_satuan']); ?></td>
               <td class="align-middle text-center">
                 <div class="w-full d-flex justify-content-center gap-3 ">

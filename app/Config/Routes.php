@@ -86,8 +86,10 @@ $routes->group('transactions', ['filter' => 'auth'], static function ($routes) {
 
 
 // Manajemen Akun
-$routes->group('users', ['filter' => 'auth'], static function ($routes) {
+$routes->group('users', ['filter' => 'user'], static function ($routes) {
     $routes->get('(:segment)', 'UserController::edit/$1');
+});
+$routes->group('users', ['filter' => 'auth'], static function ($routes) {
     $routes->post('update', 'UserController::update');
     $routes->post('show', 'UserController::show');
 });
